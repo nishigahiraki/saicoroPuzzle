@@ -177,10 +177,6 @@ floorDice.deleteLife = 0;
 window.addEventListener('load', function(evt) {
 	console.log('onload');
 	// 表示サイズの調整
-	// const bodyWidth = document.body.clientWidth;
-	// const scale = bodyWidth<480 ? bodyWidth/480 : 1;
-	// document.body.querySelector('.screenWrap').style['transform-origin'] = `left top`;
-	// document.body.querySelector('.screenWrap').style['transform'] = `scale(${scale})`;
 	// ウィンドウの監視
 	windowAreaCheck(); // レイアウト更新
 	window.addEventListener('resize', windowAreaCheck);
@@ -276,24 +272,6 @@ function gameSelectFunc(evt) {
 	gameSelectorOBJ.pos = selectedGameMode; // 選択を待避
 	targetBTN.focus();
 }
-//
-/* サイコロの位置設定
-function setDicePos(posX, posY) {
-    const dice_ele = document.body.querySelector('.dice');
-    helperOBJ.setCSS(dice_ele, '--posX', posX);
-    helperOBJ.setCSS(dice_ele, '--posY', posY);
-}
-*/
-// diceの初期設定
-//let diceHelper.players = diceHelper.list[0];
-// playerのfocus
-//updataPlayerFocus( diceHelper.players.posX, diceHelper.players.posY )
-// focusOBJ.setDir( focusOBJ.currentDir );
-// focusOBJ.setPos( diceHelper.players.posX, diceHelper.players.posY );
-//
-//let diceHelper.canDiceMove = true;
-//let gameSelectorPos = 0;
-//
 //
 // keyリスナー
 window.addEventListener('keydown', keyCheck);
@@ -1029,7 +1007,6 @@ function onGameLoop() {
 	// 終了判定
 	//console.log( 'canDiceMove:::',diceHelper.canDiceMove  );
 	//console.log(diceHelper.players.surface.Top.face,diceHelper.players.surface.Top.nextFace);
-	// 足元のdiceが動いている時は、判定をしなければいい？ <= 移動終わりの判定ではうまくいかない？
 	if( !diceHelper.canDiceMove ||
 		Math.abs(diceHelper.players.surface.Top.face) !== Math.abs(diceHelper.players.surface.Top.nextFace) ) { return; }
 	// 終了判定
@@ -1637,14 +1614,6 @@ function rankingShrinkFunc(evt) {
 	if( shrinkIs ) { // shrinkがついた
 		rankingViewWrap.style['left'] = null;
 		rankingViewWrap.style['top'] = null;
-		/*
-		if( thisX > window.innerWidth/4 ) {
-			rankingViewWrap.style['left'] = thisX + 150 + 'px';
-		}
-		if( thisY > window.innerHeight/4 ) {
-			rankingViewWrap.style['top'] = thisY + 270 + 'px';
-		}
-		*/
 	}
 	else { // shrinkが外れた
 		if( thisX - 150 > 0 ) {
