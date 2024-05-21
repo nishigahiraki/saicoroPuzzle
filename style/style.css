@@ -1,0 +1,1483 @@
+@charset "utf-8";
+html {
+	/*background-color: blue;*/
+}
+body {
+	font-family: monospace, sans-serif;
+	/* padding: 10px; */
+	background: #112;
+	/*background-color: grey;*/
+
+	user-select: none;
+	-webkit-user-select: none; /* for safari */
+
+	font-family: monospace;
+
+	/* overflow: hidden; */
+}
+.gamestartView,
+.gameoverView {
+	text-align: center;
+	visibility: hidden;
+	width: 100%; height: 200px;
+
+	text-align: center;
+	overflow: hidden;
+
+	position: absolute;
+	left: 0px; top: 37%;
+
+	pointer-events: none;
+
+	z-index: 100;
+}
+.gamestartView.open,
+.gameoverView.open {
+	visibility: visible;
+}
+.gamestartView .viewText {
+	opacity: 0.1;
+	letter-spacing: -15px;
+}
+.gamestartView.open .viewText {
+	color: #96e;
+	opacity: 1.0;
+	letter-spacing: 0px;
+	transition: all 0.5s ease 0.3s;
+}
+.gamestartView.close .viewText {
+	font-size: 60px;
+	letter-spacing: 19px;
+	opacity: 0.0;
+	transform-origin: center;
+	transition: all 1s ease 0s;
+}
+
+.gameMessageBG {
+	width: 100%; height: 50px;
+	background:  rgba(0,0,48,0.80);
+	position: absolute;
+	left: 0px; top: 0px;
+	z-index: -1;
+	transform-origin: center;
+	transform: scaleY(0.1);
+}
+.open .gameMessageBG {
+	transition: transform 0.3s ease-out 0.1s;
+	transform: scaleY(1);
+}
+
+.close .gameMessageBG {
+	transition: transform 1s ease-out 0s;
+	transform: scaleY(0.0);
+}
+.viewText {
+	display: inline-block;
+	color: #c22;
+	font-family: Impact;
+	font-size: 32px;
+	line-height: 50px;
+	text-align: center;
+	white-space: nowrap;
+	overflow: visible;
+
+	/* width: 200px; */
+	position: relative;
+
+	transform-origin: left bottom;
+}
+.gameoverView .viewText {
+	transform: translateX(320px);
+}
+.gameoverView.open .viewText {
+	animation: gameoverIn 0.8s ease-out 0.6s both;
+}
+.gameoverView.pause .viewText {
+	animation: pauseIn 0.3s ease-out 0.6s both;
+}
+.gameoverView.pause.close .viewText {
+	animation: pauseOut 0.3s ease-out 0.3s both;
+}
+.subText {
+	color: #c22;
+	font-family: Impact;
+	font-size: 16px;
+	line-height: 16px;
+	letter-spacing: -6px;
+	white-space: nowrap;
+	
+	opacity: 0;
+}
+.BG {
+	display: block;
+	width: 26px;
+	text-align: center;
+	border-radius: 1em;
+	margin: 0.5em auto;
+	padding: 5px 10px;
+
+	background-color: rgba(0,0,0,0.8);
+
+	overflow: hidden;
+	position: relative;
+}
+.open .subText {
+	width: 200px;
+	letter-spacing: 1px;
+	opacity: 1;
+	transition:
+		opacity 0.5s ease 0.3s,
+		width 0.3s ease 0.5s,
+		letter-spacing 0.3s ease 0.6s;
+}
+.close .subText {
+	opacity: 0.0;
+	transform-origin: center;
+	transform: scale(0.8);
+	transition: all 0.3s ease 0s;
+}
+@keyframes pauseIn {
+	0% {
+		opacity: 0.1;
+		letter-spacing: 32px;
+		transform: translateX(0px);
+	}
+	100% {
+		opacity: 1.0;
+		letter-spacing: 0px;
+		transform: translateX(0px);
+	}
+}
+@keyframes pauseOut {
+	0% {
+		opacity: 1.0;
+		letter-spacing: 0px;
+		transform: translateX(0px);
+	}
+	100% {
+		opacity: 0.1;
+		letter-spacing: 32px;
+		transform: translateX(0px);
+	}
+}
+@keyframes gameoverIn {
+	0% {
+		transform: translateX(420px);
+	}
+	30% {
+		transform: translateX(-5px) skewX(-45deg);
+	}
+	50% {
+		transform: translateX(0px) skewX(30deg);
+	}
+	65% {
+		transform: translateX(0px) skewX(-20deg);
+	}
+	80% {
+		transform: translateX(0px) skewX(10deg);
+	}
+	90% {
+		transform: translateX(0px) skewX(-5deg);
+	}
+	95% {
+		transform: translateX(0px) skewX(2deg);
+	}
+	100% {
+		transform: translateX(0px) skewX(0deg);
+	}
+}
+#menuWrap {
+	/* background: rgba(255,0,0,0.2); */
+	padding: 15px;
+	margin: 0px auto;
+	position: relative;
+	/* bottom: -50px; */
+
+	display: flex;
+	flex-direction: column;
+	row-gap: 10px;
+}
+#menuWrap .gameSelectBtn {
+	width: 200px;
+	font-size: 24px;
+	line-height: 32px;
+	text-align: center;
+	filter: brightness(130%);
+
+	margin: 0px;
+
+	pointer-events: fill;
+
+}
+.close #menuWrap {
+	opacity: 0;
+	transform-origin: center top;
+	transform: scaleY(0.75);
+	transition: all 0.3s ease 0s;
+}
+#menuWrap>div {
+	/* display: inline;
+	position: absolute; */
+	/* left: 140px; bottom: -50px; */
+	visibility: hidden;
+	opacity: 0.1;
+	transform: translateX(100px);
+	transition-duration: 0s;
+}
+.gameoverView.open .gameSelectBtn{
+	/* width: 150px; */
+	height: 32px;
+	border-radius: 16px;
+	background: rgba(0,0,24,0.1);
+	/* transform: translate(23px); */
+}
+/*.gameoverView.open .gameSelectBtn.focus:not(:disabled),*/
+/* .gameoverView.open .gameSelectBtn:not(:disabled):hover { */
+.gameoverView.open .gameSelectBtn.focus,
+.gameoverView.open .gameSelectBtn:hover {
+	background: rgba(0,0,24,0.75);
+}
+.gameoverView.open #menuWrap.on>div {
+	visibility: visible;
+	opacity: 1;
+	transform: translate(0px);
+}
+
+.gameoverView.open #menuWrap>div:nth-of-type(1) {
+	transition: all 0.8s ease calc(1s);
+}
+.gameoverView.open #menuWrap>div:nth-of-type(2) {
+	transition: all 0.8s ease calc(1s + 0.1s*1);
+}
+.gameoverView.open #menuWrap>div:nth-of-type(3) {
+	transition: all 0.8s ease calc(1s + 0.1s*2);
+}
+.gameoverView.open #menuWrap>div:nth-of-type(4) {
+	transition: all 0.8s ease calc(1s + 0.1s*3);
+}
+.gameoverView.open #menuWrap>div:nth-of-type(5) {
+	transition: all 0.8s ease calc(1s + 0.1s*4);
+}
+
+.gameModeView {
+	visibility: hidden;
+	color: #c22;
+	font-family: Impact;
+	font-size: 16px;
+	line-height: 16px;
+	text-align: center;
+	width: 150px;
+	background: rgba(0,0,16,0.80);
+	border-radius: 10px;
+	padding: 2px;
+
+	position: absolute;
+	left: calc((100% - 150px)/2); bottom: 10px;
+
+	z-index: 90;
+
+	pointer-events: none;
+}
+.gameModeView.open {
+	visibility: visible;
+}
+.gameSelectView.open {
+	visibility: visible;
+}
+.gameSelectView {
+	visibility: hidden;
+	text-align: center;
+	width: 200px; height: 300px;
+	background: rgba(0,0,16,0.9);
+	border-radius: 5px;
+	font-family: Impact;
+
+	position: absolute;
+	left: 5px; bottom: 5px;
+
+	overflow: hidden;
+
+	z-index: 100;
+}
+.gameSelectTitle {
+	width: 100%;
+	color: #529;
+	font-family: Impact;
+	font-size: 24px;
+	line-height: 24px;
+	padding: 3px 3px;
+	margin-bottom: 0.5em;
+	background: #fca;
+}
+.gameSelectBtn {
+	width: 100%;
+	font-family: Impact;
+	font-size: 24px;
+	line-height: 24px;
+	color: #336;
+	margin: 10px auto;
+}
+.gameSelectBtn.focus:not(:disabled),
+.gameSelectBtn:not(:disabled):hover {
+	color: #96e;
+}
+.gameSelectBtn:disabled {
+	color: #668;
+}
+.gameSelectBtn.selected {
+	color: #c22;
+}
+.gameSelectBtn.focus.selected,
+.gameSelectBtn.selected:hover {
+	color: #f99;
+}
+.gameModeInfoView {
+	visibility: hidden;
+	width: 260px; height: 130px;
+	border-radius: 5px;
+	position: absolute;
+	right: 5px; bottom: 5px;
+	background:  rgba(0,0,0,0.75);
+	z-index: 100;
+}
+.gameModeInfoView:has(.open) {
+	visibility: visible;
+}
+.gameModeInfo {
+	display: block;
+	display: none;
+	color: #fff;
+	padding: 10px;
+	border-radius: 5px;
+	/* background: rgba(255,255,255,0.60); */
+
+	position: relative;
+}
+.gameModeInfo.open {
+	display: block;
+}
+.gameModeInfo .title {
+	background: none;
+	text-align: left;
+	font-family: Impact;
+	font-size: 20px;
+	line-height: 20px;
+	color: #c22;
+
+	margin: 0px;
+	margin-bottom: 5px;
+	padding: 0px;
+}
+#gameStartBtn {
+	display: inline-block;
+	/* width: 5.5em; */
+	text-align: right;
+	font-family: Impact;
+	font-size: 24px;
+	color: #c22;
+	position: absolute;
+	right: 5px; bottom: 2px;
+}
+#gameStartBtn:hover {
+	color: #f99;
+}
+.scoresWrap {
+	width: 22em;
+	/* padding: 5px; */
+	margin: 0px;
+	position: absolute;
+	left: 5px; top: 5px;
+
+	transform-origin: left top;
+
+	z-index: 90;
+}
+.hiScoreView,
+.scoreView,
+.bestTimeView,
+.timeView,
+.maxChainView,
+.chainView {
+	width: 100%; height: 30px;
+	color: #dde;
+	font-size: 24px;
+	line-height: 24px;
+	font-family: Impact;
+	padding: 2px 10px 2px 1px;
+	margin: 0;
+	background: rgba(0,0,16,0.8);
+	display: flex;
+	justify-content: space-between;
+
+	pointer-events: none;
+
+	transition: height 0.3s ease-in-out 0s;
+}
+.scoresWrap div:nth-of-type(1) {
+	padding-top: 4px;
+}
+.chainView {
+	margin-top: 1em;
+}
+.scoresWrap .shrink {
+	height: 0px;
+	padding: 0px;
+}
+.scoresWrap>div>span {
+	transform-origin: left top;
+	transform: scaleY(1);
+	transition: transform 0.3s ease-in-out 0s;
+}
+.scoresWrap>.shrink>span {
+	transform: scaleY(0);
+}
+
+.timeView:has(.LIMITani){
+	animation: timeLimit 1s ease-in-out infinite;
+}
+.timeView:has(.LIMIT) {
+	color: #c22;
+	transition: color 0.3s ease 0s;
+}
+@keyframes timeLimit {
+	0% { color: #dde; }
+	40% { color: #c22; }
+	40% { color: #c22; }
+	100% { color: #dde; }
+}
+.presetText {
+	display: inline-block;
+	width: 5em;
+	text-align: right;
+}
+.gameText {
+	font-family: Impact;
+	display: flex;
+	justify-content: right;
+	column-gap: 1px;
+
+}
+[class^="kt"] {
+	width: 0.5em;
+	/* color: #dde; */
+	text-align: center;
+}
+[class^="kt"].disabled {
+	color: #234;
+}
+[class^="kt"].pipe {
+	color: #aad;
+	width: 0.3em;
+	text-align: right;
+}
+.maxChainView .presetText {
+	margin-right: 0.5em;
+}
+.chainView { 
+	display: inline-block;
+	width: auto;
+	background: none;
+	position: relative;
+	left: 30px;
+	transform-origin: right bottom;
+	visibility: hidden;
+}
+.chainView.in { 
+	visibility: visible;
+	animation: chainIn 0.2s ease-in 0s both;
+}
+.chainView.out { 
+	visibility: visible;
+	animation: chainOut 10s ease-in 0s both;
+}
+@keyframes chainIn {
+	0% { 
+		opacity: 0.1;
+		color: #fff;
+		transform: translateY(20px);
+	}
+	75% { 
+		opacity: 0.8;
+		transform: translateY(-7px);
+	}
+	90% { 
+		opacity: 1;
+		transform: translateY(-5px);
+	}
+	100% { 
+		opacity: 1;
+		color: #fff;
+		transform: translateY(0px);
+	}
+}
+@keyframes chainOut {
+	0% { 
+		opacity: 1;
+		color: #fff;
+		transform: translateY(0px);
+	}
+	80% { 
+		opacity: 1;
+		transform: translateY(0px);
+	}
+	90%{ 
+		opacity: 0.8;
+		color: #fff;
+		transform: translateY(0px);
+	}
+	100% { 
+		opacity: 0.0;
+		color: #300;
+		transform: translateY(10px) rotate(-15deg);
+	}
+}
+.debugView {
+	position: absolute;
+	padding: 10px;
+	background: rgba(0,0,16,0.5);
+
+	z-index: 110;
+
+	transform: translateX(-350px);
+	transition: transform 0.3s ease 0s;
+}
+.debugView.open {
+	transform: translateX(0px);
+}
+.currentViewWrap {
+	flex-shrink: 0;
+	width: 100px; height: 100px;
+	background: darkblue;
+	border-radius: 50%;
+	overflow: hidden;
+
+	position: relative;
+}
+.currentView { /* 現在の操作diceのプレビュー */
+	width: 100%; height: 100%;
+	position: absolute;
+	left: 18px; top: -12px;
+	/* viewにパースを効かせる */
+	transform-style: preserve-3d;
+	transform: rotateX(-30deg) rotateY(-45deg) rotateZ(0deg) scaleX(0.5) scaleY(0.5) scaleZ(0.5);
+	z-index: 1;
+}
+.currentFloorWrap {
+	width: 100px; height: 100px;
+	
+	position: absolute;
+	/* left: 50px; top: 30px; */
+	left: 50px; top: -55px;
+	transform-style: preserve-3d;
+
+	transform-origin: 0px 0px 0px;
+	transform: translateY(100px) translateZ(-35px) rotateX(-30deg) rotateY(-45deg) rotateZ(0deg) scaleX(0.65) scaleY(0.65) scaleZ(0.65);
+}
+.currentFloor {
+	width: 100px; height: 100px;
+	background: #341;
+	position: absolute;
+	left: 0px; top: 0px;
+	position: absolute;
+	transform-origin: left top;
+}
+.currentFloor.Top {
+	transform: rotateX(90deg);
+}
+.currentFloor.Down {
+	height: 10px;
+	transform: translateZ(100px);
+	filter: brightness(80%);
+}
+.currentFloor.Right {
+	height: 10px;
+	transform-origin: right top;
+	transform: rotateY(90deg);
+	filter: brightness(40%);
+}
+.gameView {
+	position: relative;
+	background : green;
+
+	width: 100%; height: 480px;
+	max-width: 480px;
+	padding: 0px;
+	margin: 20px auto;
+}
+.gameInfomationWrap {
+	display: none;
+	width: 100%; height: 100%;
+	background-color: rgba(0,0,64,0.75);
+	opacity: 1.0;
+	position: absolute;
+	left: 0px; top: 0px;
+	z-index: 110;
+}
+.gameInfomationWrap.open {
+	display: block;
+}
+.gameInfomationWrap.close {
+	opacity: 0;
+	transition: all ease 0s;
+}
+.gameInfomationWrap.close .gameInfomationTxtWrap {
+	transform-origin: center;
+	transform: scale(0.9);
+	transition: all ease 0s;
+}
+
+.gameInfomationTxtWrap {
+	width: calc(100% - 10px);
+	max-width: 500px;
+	height: max(auto, 480px);
+	padding: 30px 15px;
+	border-radius: 10px;
+	background-color: rgba(0, 0, 16, 0.8);
+	position: absolute;
+	left: max( calc( (100% - (500px - 10px))/2 ),
+				calc( (100% - (100% - 10px))/2 ));
+	top: 10px;
+	transform-origin: center;
+}
+.gameInfomationTxtWrap .title {
+	display: block;
+	width: 100%;
+	color: #96e;
+	background-color: transparent;
+	border-radius: none;
+	padding-bottom: 5px;
+	border-bottom: 4px solid #529;
+}
+.gameInfomationTxtWrap .title .kana {
+	font-size: 20px;
+	font-family: sans-serif;
+	font-weight: bold;
+}
+.gameInfomationTxtWrap p {
+	color: #eef;
+	text-align: justify;
+	font-size: 16px;
+	line-height: 1.5;
+	margin: 2px 0px;
+	margin-bottom: 1.5rem;
+}
+.gameInfomationTxtWrap p:has(.subText) {
+	text-align: right;
+	padding: 0px 1em;
+}
+.gameInfomationTxtWrap p:nth-last-of-type(2) {
+	margin-bottom: 2rem;
+}
+.gameInfomationTxtWrap p:last-of-type {
+	margin-bottom: 0rem;
+}
+.dicePreViewWrap {
+	text-align: center;
+	position: absolute;
+	/* left: calc(100% - 170px); top: 0px; */
+	/* left: 585px; top: 5px; */
+	right: 5px; top: 5px;
+
+	z-index: 90;
+}
+.viewControlsView {
+	display: none;
+	position: absolute;
+	transform: translateY(-100px);
+	transition: all 0.3s ease 0s;
+}
+.viewControlsView.open {
+	display: block;
+	transform: translateY(0px);
+}
+.gameBtnsWrap {
+	background: rgba(255,255,255,0.2);
+	position: absolute;
+	right: 5px; bottom: 5px;
+	z-index: 90;
+}
+.gameBtnsWrap .gamebtn {
+	margin: 0px;
+}
+.screenWrap {
+	/*width: 375px; height: 375px;*/
+	width: 480px; height: 480px;
+	/* width: 100%; height: 100%; */
+	/* height: calc(480*(480px/640)); */
+	background: black;
+	/* background: #330; */
+	/* margin: 20px auto 10px; */
+	position: relative;
+	overflow: hidden;
+}
+.st-DEAD {
+	filter: grayscale(0.4) brightness(0.8);
+	transition: filter 20s linear 0s;
+}
+.gameScreen {
+	--scale: 0.8;
+	width: 100px; height: 100px;
+	/* background: #100; */
+	position: absolute;
+	left: 205px; top: 170px;
+	/* viewにパースを効かせる */
+	transform-style: preserve-3d;
+	transform: rotateX(-30deg) rotateY(-40deg) rotateZ(0deg) 
+				scaleX(var(--scale)) scaleY(var(--scale)) scaleZ(var(--scale)); /* stageの角度 */
+}
+.playerMarkWrap,
+.playerWrap,
+.playerShadowWrap {
+	transform-style: preserve-3d;
+	position: relative;
+	/* ステージをzx平面として回転 */
+	transform: translateY(-10px) rotateX(90deg);
+}
+.playerShadowWrap {
+	transform: translateY(-2px) rotateX(90deg);
+}
+.playerMarkWrap {
+	transform: translateY(-70px) rotateX(90deg);
+}
+.playerFocus,
+.playerShadow {
+	--posX: 1;
+	--posY: 1;
+	--rotate: 45;
+	/* */
+	width: 100px; height: 100px;
+	border: 10px solid #f33;
+	border-radius: 0% 50% 50%;
+	position: absolute;
+	left: 0px; top: 0px;
+
+	transform-origin: 50% 50% 50%;
+	transform: translate(calc((var(--posX) - 1)*100px), calc((var(--posY) - 1)*100px)) rotate( calc(var(--rotate)*1deg) );
+
+	transition: transform 0ms ease 0s;
+}
+.playerShadow {
+	border: 10px solid rgba(0,0,0,0.25);
+}
+.playerMark {
+	--posX: 1;
+	--posY: 1;
+	--rotate: 45;
+	/**/
+	width: 80px; height: 80px;
+	border-radius: 0% 50% 50%;
+	background: blue;
+	overflow: hidden;
+	position: absolute;
+	left: 0px; top: 0px;
+
+	transform-origin: 0% 0% 0%;
+	transform: translate3d(calc((var(--posX) - 1)*100px + 20px), calc((var(--posY) - 1)*100px + 20px), 0px) rotate3d(1,1,1,-180deg);
+	transition: transform 0ms ease 0s;
+}
+.playerFocus.TRANSLATE,
+.playerShadow.TRANSLATE,
+.playerMark.TRANSLATE {
+	transition-timing-function: linear;
+}
+.playerFocus.ROTATE,
+.playerShadow.ROTATE {
+	transition-timing-function: linear;
+}
+.diceWrap {
+	transform-style: preserve-3d;
+}
+.dice { 
+	/* display: none; */
+	--posX: 1;
+	--posY: 1;
+	--rotateX: 0;
+	--rotateY: 0;
+	--rotateZ: 0;
+	--deleteLife: 320;
+	
+	width: 100px; height: 100px;
+	position: absolute;
+	left: 0px; top: 0px;
+
+	opacity: 1.0;
+
+	transform-style: preserve-3d;
+	/* backface-visibility: hidden; */
+	/* perspective: 10000px; */
+	/* transform: translate(100px,100px) rotateX(45deg) rotateZ(45deg); */
+	/* perspective-origin: 50% 50%; */
+	/* transform-box: content-box; */
+
+	transform-origin: 0px;
+	transform: translate3d(calc((var(--posX) - 1)*100px), 0px, calc((var(--posY) - 1)*100px));
+	/* transform: translate3d(calc((var(--posX) - 1)*100px), 0px, calc((var(--posY) - 1)*100px)) translateX(50px) translateY(-20px) rotate3d(0,0,1,45deg); */
+		/* rotateX(calc(var(--rotateX)*90deg))
+		rotateY(calc(var(--rotateY)*90deg))
+		rotateZ(calc(var(--rotateZ)*90deg))
+				; */
+
+	transition: transform 1s ease 0s;
+}
+.dice.Right {
+	transform-origin: 100px 100px 0px;
+	transform: translate3d(calc((var(--posX) - 1)*100px), 0px, calc((var(--posY) - 1)*100px)) rotate3d(0,0,1,90deg);
+	/* animation: dice-Right 1s ease 0s 1; */
+}
+.dice.Left {
+	transform-origin: 0px 100px 0px;
+	transform: translate3d(calc((var(--posX) - 1)*100px), 0px, calc((var(--posY) - 1)*100px)) rotate3d(0,0,1,-90deg);
+}
+.dice.Down {
+	transform-origin: 0px 100px 100px;
+	transform: translate3d(calc((var(--posX) - 1)*100px), 0px, calc((var(--posY) - 1)*100px)) rotate3d(1,0,0,-90deg);
+}
+.dice.Up {
+	transform-origin: 0px 100px 0px;
+	transform: translate3d(calc((var(--posX) - 1)*100px), 0px, calc((var(--posY) - 1)*100px)) rotate3d(1,0,0,90deg);
+}
+.dice.notMove {
+	transform-origin: 50px 50px 50px;
+}
+.dice .face {
+	text-align: center;
+
+	width: 100%; height: 100%;
+	background: #efe;
+	border: 1px solid #6a6;
+	border-radius: 8px;
+
+	position: absolute;
+	transform-origin: left top;
+
+	opacity: 1;
+	backface-visibility: hidden;
+}
+.dice.DELETE {
+	/* js制御に変更 */
+	/* transform: 	translateX( calc((var(--posX) - 1)*100px) )
+				translateY( 100px )
+				translateZ( calc((var(--posY) - 1)*100px) ) 
+				rotateX(0deg) rotateZ(0deg);
+	transition: transform 10s ease-in 0s; */
+}
+.dice.BIRTH.first .face {
+	/* js制御に変更 */
+	/* opacity: 0.5;
+	background-color: blue; */
+}
+.dice.DELETE .face {
+	/* js制御に変更 */
+	/* opacity: 0.25;
+	background-color: red;
+	transition: all 10s ease 0s; */
+	animation: deleteFace 10s ease 0s paused;
+}
+.dice.DELETE-restart .face {
+	/* opacity: 0.75;
+	background-color: rgb( 246, 128, 119); */
+}
+@keyframes deleteFace {
+	100% {
+		opacity: 0.25;
+		background-color: red;
+	}
+}
+.dice.BIRTH {
+	transition-duration: 0s;
+	transform: translate3d(calc((var(--posX) - 1)*100px), 100px, calc((var(--posY) - 1)*100px)) rotateX(0deg) rotateZ(0deg);
+}
+.dice.BIRTH .face {
+	/* transition: all 5s ease-in 0s; */
+	animation: birthFace 5s ease-in 0s;
+}
+@keyframes birthFace {
+	0% {
+		opacity: 0.5;
+		background-color: blue;
+	}
+}
+.dice.FLASH .face {
+	transition-duration: 0s;
+	filter: brightness(200%);
+}
+.dice.PAUSE .face {
+	animation-play-state: paused;
+}
+.dotWrap {
+	/* 表示面 */
+	width: 100%; height: 100%;
+	padding: 10px;
+	position: relative;
+
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: center;
+}
+/* dot pattern */
+.dotWrap>span{
+	/* base */
+	flex-shrink: 0;
+	flex-grow: 0;
+	display: inline-block;
+	width: 20px; height: 20px;
+	background: #99e;
+	border-radius: 50%;
+}
+span.dots1 {
+	background: #f66;
+	transform: scale(1.3);
+}
+span.dots2:first-of-type,
+span.dots3:first-of-type {
+	margin-top: 10px;
+	margin-bottom: auto;
+}
+span.dots2:last-of-type,
+span.dots3:last-of-type {
+	margin-bottom: 10px;
+	margin-top: auto;
+}
+span.dots4:nth-of-type(2n+1),
+span.dots5:nth-of-type(1),
+span.dots5:nth-of-type(4) {
+	margin-left: 5px; 
+	margin-right: 10px;
+}
+span.dots4:nth-of-type(2n),
+span.dots5:nth-of-type(2),
+span.dots5:nth-of-type(5) {
+	margin-right: 5px; 
+	margin-left: 10px;
+}
+span.dots5:nth-of-type(3) {
+	position: absolute;
+}
+.dots6 {}
+/***************/
+.face.Down { 
+	transform: translateZ(100px);
+	filter: brightness(98%);
+}
+.face.Bottom { 
+	transform-origin: left bottom;
+	transform: rotateX(-90deg);
+	filter: brightness(80%);
+}
+.face.Right { 
+	transform-origin: right top;
+	transform: rotateY(90deg);
+	filter: brightness(92%);
+}
+.face.Left { 
+	transform: rotateY(-90deg)
+}
+.face.Top { 
+	transform: rotateX(90deg);
+}
+.face.Up { 
+	transform-origin: center center;
+	transform: rotateY(180deg);
+}
+/* diceの転がりによる影の変化 */
+.dice.Right .face.Top {
+	filter: brightness(92%);
+	transition: all 1s ease 0s;
+}
+.dice.Left .face.Right {
+	filter: brightness(100%);
+	transition: all 1s ease 0s;
+}
+.dice.Left .face.Bottom {
+	filter: brightness(92%);
+	transition: all 1s ease 0s;
+}
+.dice.Down .face.Top {
+	filter: brightness(98%);
+	transition: all 1s ease 0s;
+}
+.dice.Up .face.Down { 
+	filter: brightness(100%);
+	transition: all 1s ease 0s;
+}
+.dice.Up .face.Bottom { 
+	filter: brightness(98%);
+	transition: all 1s ease 0s;
+}
+/* stage */
+.stage {
+	position: relative;
+	/* ステージをzx平面として回転 */
+	transform: translateY(100px) rotateX(90deg);
+}
+.mas.base {
+	width: 400px; height: 400px;
+	background: #fcc;
+
+	position: absolute;
+	z-index: -1;
+}
+div[class*="pos"] {
+	width: 100px; height: 100px;
+	background: #ccf;
+	position: absolute;
+}
+div[class*="pos2"] {
+	top: 100px;
+}
+div[class*="pos3"] {
+	top: 200px;
+}
+div[class*="pos4"] {
+	top: 300px;
+}
+div[class*="pos"][class$="2"] {
+	left: 100px;
+}
+div[class*="pos"][class$="3"] {
+	left: 200px;
+}
+div[class*="pos"][class$="4"] {
+	left: 300px;
+}
+.floorWrap {
+	width: 100px; height: 100px;
+	
+	position: absolute;
+	left: 0px; top: 0px;
+	transform-style: preserve-3d;
+
+	transform-origin: 0px 0px 0px;
+}
+.floor {
+	width: 420px; height: 420px;
+	background: #561;
+	position: absolute;
+	left: 0px; top: 0px;
+	position: absolute;
+	transform-origin: left top;
+}
+.floor.Top {
+	transform: translate3d(-10px, 101px, -10px) rotateX(90deg);
+}
+.floor.Right {
+	height: 10px;
+	transform-origin: right top;
+	transform: translate3d(-10px, 101px, -10px) rotateY(90deg);
+	filter: brightness(40%);
+}
+.floor.Down {
+	height: 10px;
+	transform: translate3d(-10px, 101px, -10px) translateZ(420px);
+	filter: brightness(80%);
+}
+/* control */
+.controlWrap {
+	/* display:none; */
+	/* width: 200px; height: 200px; */
+	width: 100%; height: calc(100% - 100px);
+	background: rgba(128, 0, 0, 0.0);
+	
+	position: absolute;
+	left: 0px; top: 100px;
+
+	transition: all 0.6s ease-in-out 0s;
+
+	z-index: 90;
+}
+.controlWrap.padMode {
+	width: 100px; height: 100px;
+	background: rgba(228, 228, 255, 0.2);
+	left: 20px;
+	top: calc( 410px );
+	margin: 25px;
+}
+.draggableArea {
+	/* display: none; */
+	width: 100%; height: 100%;
+	/* background: rgba(0, 0, 0, 0.1); */
+	background: transparent;
+	position: absolute;
+	left: 0px; top: 0px;
+}
+.controlPoint {
+	display: none;
+	width: 50px; height: 50px;
+	background: #990;
+	border-radius: 50%;
+	
+	position: absolute;
+	left: -25px;
+	top: -25px;
+	
+	transition: left,top 0.1s ease 0s;
+}
+.clickedPoint {
+	width: 0px; height: 0px;
+	opacity: 0;
+	border: 10px solid rgba(234, 0, 0, 0.5);
+	border-radius: 50%;
+	position: absolute;
+	transform-origin: 50% 50%;
+	pointer-events: none;
+	transition-duration: 0s;
+}
+.clickedPoint.in {
+	width: 10px; height: 10px;
+	opacity: 1.0;
+	border-width: 10px;
+	transform: translate(0px, 0px);
+}
+.clickedPoint.over {
+	width: 50px; height: 50px;
+	opacity: 1.0;
+	border-width: 5px;
+	border-color: rgba(0, 0, 234, 0.5);
+	transform: translate(-20px, -20px);
+	transition: all 0.3s ease-in-out 0s;
+}
+.clickedPoint.out {
+	width: 100px; height: 100px;
+	opacity: 0.1;
+	border-width: 0.1px;
+	transform: translate(-45px, -45px);
+	transition: all 0.8s ease-in-out 0s;
+}
+.viewVal {
+	color: #fff;
+}
+
+.flexWrap {
+	/* width: 150px; height: 120px; */
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: red;
+	border-radius: 50% 5px 50% 50%;
+
+	position: relative;
+
+	padding: 5px;
+}
+.triangle {
+	pointer-events: none;
+	display: inline-block;
+	width: 24px; height: 12px;
+	/* background-color: white; */
+	overflow: hidden;
+	position: relative;
+	left: 3px; top: -4px;
+	transform-origin: left top;
+	transform: scaleY(calc(3/2));
+}
+.triangle::before {
+	content: "";
+	display: inline-block;
+	width: 24px; height: 24px;
+	background-color: grey;
+	position: absolute;
+	left: 0px; top: 0px;
+	transform-origin: center;
+	transform: rotate(45deg) scale(calc(1/1.4142));
+}
+.controlbtnWrap {
+	/* opacity: 0.3; */
+	width: 32px; height: 32px;
+	/* background-color: blue; */
+	position: absolute;
+	left: calc((100% - 32px)/2);
+	top: calc((100% - 32px)/2);
+	transform-origin: center;
+	z-index: 5;
+	pointer-events: none;
+}
+.controlbtn {
+	width: 32px; height: 32px;
+	background-color: transparent;
+	border: 1px solid grey;
+	border-radius: 50%;
+	position: absolute;
+	transform-origin: center;
+	opacity: 0.0;
+}
+.controlbtn.Up { transform: translateY(-60px) rotate(0deg); }
+.controlbtn.Left { transform: translateX(-60px) rotate(-90deg); }
+.controlbtn.Right { transform: translateX(60px) rotate(90deg); }
+.controlbtn.Down { transform: translateY(60px) rotate(180deg); }
+.controlbtn.st-keydown {
+	border-color: white;
+}
+.controlbtn.st-keydown .triangle::before {
+	background-color: white;
+}
+
+
+.buttonWrap {
+	width: 200px;
+	display: flex;
+	margin: 5px auto;
+	flex-wrap: wrap;
+	column-gap: 10px;
+	row-gap: 5px;
+}
+.gamebtn {
+	color: #fff;
+	font-weight: bold;
+	margin: 5px;
+	padding: 5px 1em;
+	background: #aaf;
+	border: 2px solid #66c;
+	border-radius: 5px;
+}
+.gamebtn:hover,
+.gamebtn:active{
+	color: #aaf;
+	background: #fff;
+}
+.gameCheck {
+	color: #fff;
+}
+.gameCheck input {
+	line-height: 1em;
+	vertical-align: 0.02em;
+	margin: 5px;
+}
+.draggableMark {
+	width: 24px; height: 100%;
+	border: 1px solid orange;
+	border-radius: 5px;
+	padding: 5px 3px;
+
+	/* position: absolute;
+	left: 5px; top: 5px; */
+
+	display: flex;
+	justify-content: center;
+	align-items:center;
+	display: none;
+}
+
+.draggableMark .line {
+	content: "";
+	display: block;
+	width: 100%; height: 3px;
+	background-color: orange;
+	border-radius: 2px;
+
+	position: relative;
+
+	transform-origin: center;
+	transform: rotate(90deg);
+}
+.draggableMark .line::after,
+.draggableMark .line::before {
+	content: "";
+	display: block;
+	width: 100%; height: 100%;
+	background-color: orange;
+	border-radius: 2px;
+
+	position: absolute;
+	left: 0px; top: 0px;
+}
+.draggableMark .line::after {
+	transform: translateY(-5px);
+}
+.draggableMark .line::before {
+	transform: translateY(5px);
+}
+/* for Ranking */
+.title {
+	color: #529;
+	font-family: Impact;
+	font-size: 24px;
+	line-height: 24px;
+	padding: 3px 0.5em;
+	background: #fca;
+}
+/* submit */
+.resultView {
+	visibility: hidden;
+	width: 300px; height: 360px;
+	background: rgba(255,255,255,0.9);
+	border-radius: 5px;
+	margin: 0px auto;
+
+	overflow: hidden;
+	position: absolute;
+	left: calc( (100% - 300px)/2 );
+
+	z-index: 100;
+}
+.resultView.open {
+	visibility: visible;
+}
+.resultWrap {
+	color: #324;
+	font-family: monospace,sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+	width: 100%; height: 100%;
+	text-align: center;
+}
+.resultFrame .heading,
+.resultFrame .userVal {
+	font-family: Impact;
+	font-weight: normal;
+	font-size: 24px;
+}
+.resultFrame .heading {
+	display: inline-block;
+	width: 75px;
+	text-align: right;
+}
+.resultFrame .userVal {
+	display: inline-block;
+	width: 100%;
+	text-align: right;
+}
+.resultFrame>p {
+	margin-bottom: 10px;
+}
+.resultTime,
+.resultScore {
+	position: relative;
+}
+.resultTime .bestTimeUpdata,
+.resultScore .hiScoreUpdata {
+	visibility: hidden;
+
+	color: #f63;
+	font-size: 16px;
+	font-weight: bold;
+	text-align: center;
+
+	padding: 3px;
+	border: 2px solid #f63;
+	border-radius: 5px;
+
+	position: absolute;
+	right:-25px; top: -10px;
+
+	transform: rotate(20deg);
+}
+.resultTime .bestTimeUpdata.visible,
+.resultScore .hiScoreUpdata.visible {
+	visibility: visible;
+	animation : stampAnime 0.15s ease 0.4s both;
+}
+.resultTime .bestTimeUpdata.visible {
+	animation-delay : 0.55s
+}
+@keyframes stampAnime {
+	0% { opacity : 0.0; transform : scale(2.0) rotate(15deg);}
+	90% { opacity : 1.0; transform : scale(0.9) rotate(15deg);}
+	100% { opacity : 1.0; transform : scale(1.0) rotate(15deg);}
+}
+.resultFrame {
+	display: inline-block;
+	width: 250px;
+	text-align: left;
+	padding: 10px;
+	margin: 5px auto 20px;
+	border-bottom: 3px solid #c22;
+}
+.resultWrap .gamebtn {
+	width: 90px;
+	margin-top: 10px;
+}
+/* rankingView */
+.rankingViewWrap {
+	width: 300px; height: 300px;
+	background: rgba(255,255,255,0.75);
+	border-radius: 5px;
+	overflow: hidden;
+	position: absolute;
+	right: 10px; bottom: 10px;
+	/* left: calc(100vw - 150px);
+	top: calc(100vh - 300px); */
+
+	transition: all 0.3s ease 0s;
+
+	z-index: 100;
+}
+.rankingViewWrap.shrink {
+	width: 150px; height: 30px;
+	text-align: right;
+}
+.rankingView {
+	height: 264px;
+}
+.viewStatus {
+	color: white;
+	font-size: 16px;
+	text-align: right;
+	width: 100%; min-height: 24px;
+	background-color: rgba(0,0,16,0.5);
+	padding: 2px 5px;
+	border-radius: 5px;
+}
+.pathWrap {
+	position: absolute;
+	left: 0px; top: 0px;
+	opacity: 0.5;
+	z-index: 110;
+	pointer-events: none;
+}
+
+.configView {
+	background-color: rgba(128,128,128,0.25);
+	border-radius: 0px 5px 5px 0px;
+	overflow: hidden;
+
+	position: absolute;
+	bottom: 10px;
+
+	display: inline-flex;
+	flex-direction: row-reverse;
+
+	transform: translate(-200px);
+	transition: 0.3s ease 0s;
+
+	z-index: 100;
+}
+.configView.open {
+	transform: translate(0px);
+}
+.configView .title {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 5px;
+}
+.configView .mark {
+	width: 16px; height: 16px;
+	border-top: 6px solid #529;
+	border-right: 6px solid #529;
+	transform: translate(-3px) rotate(45deg);
+	transition: 0.15s ease 0.15s;
+}
+.configView.open .mark{
+	transform: translate(3px) rotate(-135deg);
+}
+.checkBoxWrap {
+	width: 200px;
+	color: white;
+	padding: 10px;
+	position: relative;
+	z-index: 100;
+
+	display: flex;
+	flex-direction: column;
+	row-gap: 4px;
+}
+.controlWrap.padMode .controlbtnWrap {
+	display: block;
+	transition: transform 0.3s ease 0s;
+}
+.controlWrap.padMode .controlbtn {
+	pointer-events: fill;
+	opacity: 0.3;
+	transition: opacity 0.3s ease 0.6s;
+}
