@@ -26,6 +26,7 @@
 				</p>
 				<p><span class="subText">Please any Key press to start.</span></p>
 			</div>
+			<div class="gameInfomationBG"></div>
 		</div>
 		<div class="pathWrap"></div>
 		<div class="resultView">
@@ -308,22 +309,23 @@
 		<form id="sendScore" action="./ranking.php#scrollPoint" method="POST" target="ranking">
 			<!-- データ送信する用の枠 -->
 		</form>
-		
-		<div class="rankingViewWrap shrink">
-			<h1 class="ranking title">RANKING</h1>
-			<iframe class="rankingView" src="./ranking.php" name="ranking"></iframe>
-		</div>
-		<div class="configView">
-			<div class="title"><div class="mark"></div></div>
-			<div class="checkBoxWrap">
-				<p>
-					<div id="viewMemory" class="viewStatus"></div>
-					<div id="viewStatus" class="viewStatus">view</div>
-				</p>
-				<p><label><input type="checkbox" id="checkBoxControlPad"> 操作パッド表示</label></p>
-				<p><label><input type="checkbox" id="checkBoxDragChangeDirection"> 継続ドラッグでの方向変更</label></p>
-				<p><label><input type="checkbox" id="checkBoxControlAxis" checked> ゲーム中操作軸を変える</label></p>
-				<p><label><input type="checkbox" id="checkBoxDebugView"> debug viewの表示</label></p>
+		<div class="overScreenWrap">
+			<div class="rankingViewWrap shrink">
+				<h1 class="ranking title">RANKING</h1>
+				<iframe class="rankingView" src="./ranking.php" name="ranking"></iframe>
+			</div>
+			<div class="configView">
+				<div class="title"><div class="mark"></div></div>
+				<div class="checkBoxWrap">
+					<p>
+						<div id="viewMemory" class="viewStatus"></div>
+						<div id="viewStatus" class="viewStatus">view</div>
+					</p>
+					<p><label><input type="checkbox" id="checkBoxControlPad"> 操作パッド表示</label></p>
+					<p><label><input type="checkbox" id="checkBoxDragChangeDirection"> 継続ドラッグでの方向変更</label></p>
+					<p><label><input type="checkbox" id="checkBoxControlAxis" checked> ゲーム中操作軸を変える</label></p>
+					<p><label><input type="checkbox" id="checkBoxDebugView"> debug viewの表示</label></p>
+				</div>
 			</div>
 		</div>
 		<script src="./script/class.js?0517"></script>
